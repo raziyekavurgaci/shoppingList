@@ -14,3 +14,13 @@ export interface Product {
   category: (typeof categories)[number];
   isBought: boolean;
 }
+
+export interface AddProductFormProps {
+  onAdd: (product: Product) => void;
+}
+
+export interface ProductTableProps {
+  products: Product[];
+  onEdit: (id: string) => void;
+  onDelete: (id: string) => void;
+}

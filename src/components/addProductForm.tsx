@@ -1,12 +1,36 @@
 import { useState } from "react";
-import {Form} from "react-bootstrap";
+import { Form, Button } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { shops, categories } from "../data/index";
+import {
+  shops,
+  categories,
+  type Product,
+  type AddProductFormProps,
+} from "../data/index";
+import { nanoid } from "nanoid";
 
-export const AddProductForm = () => {
+export const AddProductForm = ({ onAdd }: AddProductFormProps) => {
   const [name, setName] = useState<string>("");
   const [shop, setShop] = useState<string>("");
   const [category, setCategory] = useState<string>("");
+
+  const handleAdd = () => {
+    if (!name || !shop || !category) {
+      alert("Lütfen tüm alanları doldurunuz");
+      return;
+    }
+
+    onAdd({
+      id: Number(nanoid()),
+      name,
+      shop: shop as Product["shop"],
+      category: category as Product["category"],
+      isBought: false,
+    });
+    setName("");
+    setShop("");
+    setCategory("");
+  };
 
   return (
     <>
@@ -54,6 +78,7 @@ export const AddProductForm = () => {
           ))}
         </Form.Control>
       </Form.Group>
+      <Button onClick={handleAdd}>Ürünü Ekle</Button>
     </>
   );
 };
